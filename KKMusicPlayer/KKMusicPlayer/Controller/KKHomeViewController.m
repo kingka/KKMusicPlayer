@@ -8,6 +8,7 @@
 
 #import "KKHomeViewController.h"
 #import "KKHomeViewCell.h"
+#import "KKMusciTool.h"
 
 @interface KKHomeViewController ()<UITableViewDataSource,UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -29,12 +30,13 @@
 #pragma mark - UITableViewDataSource
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
-    return 0;
+    return [KKMusciTool musics].count;
 }
 
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
     KKHomeViewCell *cell = [KKHomeViewCell cellWithTableView:tableView];
+    cell.music = [KKMusciTool musics][indexPath.row];
     return cell;
 }
 
@@ -42,6 +44,11 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    return 70;
 }
 
 @end

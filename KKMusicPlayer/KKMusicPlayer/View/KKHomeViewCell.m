@@ -8,6 +8,8 @@
 
 #import "KKHomeViewCell.h"
 #import "KKMusic.h"
+#import "UIImage+KK.h"
+#import "Colours.h"
 
 @implementation KKHomeViewCell
 
@@ -31,6 +33,7 @@
     _music = music;
     self.textLabel.text = music.name;
     self.detailTextLabel.text = music.singer;
+    self.imageView.image = [UIImage circleImageWithName:music.singerIcon borderWidth:2 borderColor:[UIColor watermelonColor]];
 }
 
 @end

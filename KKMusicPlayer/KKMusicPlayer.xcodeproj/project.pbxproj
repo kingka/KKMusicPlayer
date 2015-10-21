@@ -24,6 +24,10 @@
 		F9AB2A6B1BD7746100BA8CFD /* NSObject+MJProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = F9AB2A5F1BD7746100BA8CFD /* NSObject+MJProperty.m */; };
 		F9AB2A6C1BD7746100BA8CFD /* NSString+MJExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = F9AB2A611BD7746100BA8CFD /* NSString+MJExtension.m */; };
 		F9AB2A6F1BD774BD00BA8CFD /* KKLrcLine.m in Sources */ = {isa = PBXBuildFile; fileRef = F9AB2A6E1BD774BD00BA8CFD /* KKLrcLine.m */; };
+		F9AB2A731BD780D500BA8CFD /* KKMusciTool.m in Sources */ = {isa = PBXBuildFile; fileRef = F9AB2A721BD780D500BA8CFD /* KKMusciTool.m */; };
+		F9AB2A761BD782EE00BA8CFD /* UIImage+KK.m in Sources */ = {isa = PBXBuildFile; fileRef = F9AB2A751BD782EE00BA8CFD /* UIImage+KK.m */; };
+		F9AB2A791BD7836700BA8CFD /* UIView+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = F9AB2A781BD7836700BA8CFD /* UIView+Extension.m */; };
+		F9AB2A7D1BD7882C00BA8CFD /* Colours.m in Sources */ = {isa = PBXBuildFile; fileRef = F9AB2A7C1BD7882C00BA8CFD /* Colours.m */; };
 		F9D08A771BD76CA300BBE09D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F9D08A761BD76CA300BBE09D /* main.m */; };
 		F9D08A7A1BD76CA300BBE09D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F9D08A791BD76CA300BBE09D /* AppDelegate.m */; };
 		F9D08A801BD76CA300BBE09D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F9D08A7E1BD76CA300BBE09D /* Main.storyboard */; };
@@ -114,6 +118,14 @@
 		F9AB2A611BD7746100BA8CFD /* NSString+MJExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+MJExtension.m"; sourceTree = "<group>"; };
 		F9AB2A6D1BD774BD00BA8CFD /* KKLrcLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KKLrcLine.h; sourceTree = "<group>"; };
 		F9AB2A6E1BD774BD00BA8CFD /* KKLrcLine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KKLrcLine.m; sourceTree = "<group>"; };
+		F9AB2A711BD780D500BA8CFD /* KKMusciTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KKMusciTool.h; sourceTree = "<group>"; };
+		F9AB2A721BD780D500BA8CFD /* KKMusciTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KKMusciTool.m; sourceTree = "<group>"; };
+		F9AB2A741BD782EE00BA8CFD /* UIImage+KK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+KK.h"; sourceTree = "<group>"; };
+		F9AB2A751BD782EE00BA8CFD /* UIImage+KK.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+KK.m"; sourceTree = "<group>"; };
+		F9AB2A771BD7836700BA8CFD /* UIView+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Extension.h"; sourceTree = "<group>"; };
+		F9AB2A781BD7836700BA8CFD /* UIView+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Extension.m"; sourceTree = "<group>"; };
+		F9AB2A7B1BD7882C00BA8CFD /* Colours.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Colours.h; sourceTree = "<group>"; };
+		F9AB2A7C1BD7882C00BA8CFD /* Colours.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Colours.m; sourceTree = "<group>"; };
 		F9D08A711BD76CA300BBE09D /* KKMusicPlayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KKMusicPlayer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F9D08A751BD76CA300BBE09D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F9D08A761BD76CA300BBE09D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -227,8 +239,19 @@
 		F9AB2A701BD7766300BA8CFD /* Tool */ = {
 			isa = PBXGroup;
 			children = (
+				F9AB2A711BD780D500BA8CFD /* KKMusciTool.h */,
+				F9AB2A721BD780D500BA8CFD /* KKMusciTool.m */,
 			);
 			path = Tool;
+			sourceTree = "<group>";
+		};
+		F9AB2A7A1BD7882C00BA8CFD /* Colours */ = {
+			isa = PBXGroup;
+			children = (
+				F9AB2A7B1BD7882C00BA8CFD /* Colours.h */,
+				F9AB2A7C1BD7882C00BA8CFD /* Colours.m */,
+			);
+			path = Colours;
 			sourceTree = "<group>";
 		};
 		F9D08A681BD76CA300BBE09D = {
@@ -317,6 +340,10 @@
 		F9D08AF21BD76FDA00BBE09D /* Category */ = {
 			isa = PBXGroup;
 			children = (
+				F9AB2A771BD7836700BA8CFD /* UIView+Extension.h */,
+				F9AB2A781BD7836700BA8CFD /* UIView+Extension.m */,
+				F9AB2A741BD782EE00BA8CFD /* UIImage+KK.h */,
+				F9AB2A751BD782EE00BA8CFD /* UIImage+KK.m */,
 			);
 			path = Category;
 			sourceTree = "<group>";
@@ -324,6 +351,7 @@
 		F9D08AF31BD76FDA00BBE09D /* Lib */ = {
 			isa = PBXGroup;
 			children = (
+				F9AB2A7A1BD7882C00BA8CFD /* Colours */,
 				F9AB2A4A1BD7746100BA8CFD /* MJExtension */,
 			);
 			path = Lib;
@@ -545,10 +573,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				F9AB2A691BD7746100BA8CFD /* NSObject+MJCoding.m in Sources */,
+				F9AB2A761BD782EE00BA8CFD /* UIImage+KK.m in Sources */,
 				F9AB2A631BD7746100BA8CFD /* MJExtensionConst.m in Sources */,
+				F9AB2A791BD7836700BA8CFD /* UIView+Extension.m in Sources */,
 				F9AB2A681BD7746100BA8CFD /* NSObject+MJClass.m in Sources */,
 				F9AB2A661BD7746100BA8CFD /* MJPropertyKey.m in Sources */,
 				F9AB2A3E1BD7730C00BA8CFD /* KKHomeViewController.m in Sources */,
+				F9AB2A7D1BD7882C00BA8CFD /* Colours.m in Sources */,
 				F9D08A7A1BD76CA300BBE09D /* AppDelegate.m in Sources */,
 				F9AB2A651BD7746100BA8CFD /* MJProperty.m in Sources */,
 				F9AB2A641BD7746100BA8CFD /* MJFoundation.m in Sources */,
@@ -559,6 +590,7 @@
 				F9AB2A421BD7732800BA8CFD /* KKPlayingMusicViewController.m in Sources */,
 				F9AB2A6F1BD774BD00BA8CFD /* KKLrcLine.m in Sources */,
 				F9AB2A6A1BD7746100BA8CFD /* NSObject+MJKeyValue.m in Sources */,
+				F9AB2A731BD780D500BA8CFD /* KKMusciTool.m in Sources */,
 				F9AB2A6C1BD7746100BA8CFD /* NSString+MJExtension.m in Sources */,
 				F9AB2A461BD7741400BA8CFD /* KKHomeViewCell.m in Sources */,
 				F9AB2A6B1BD7746100BA8CFD /* NSObject+MJProperty.m in Sources */,
