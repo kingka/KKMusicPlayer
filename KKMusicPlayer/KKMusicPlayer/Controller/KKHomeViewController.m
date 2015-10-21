@@ -9,13 +9,23 @@
 #import "KKHomeViewController.h"
 #import "KKHomeViewCell.h"
 #import "KKMusciTool.h"
+#import "KKPlayingMusicViewController.h"
 
 @interface KKHomeViewController ()<UITableViewDataSource,UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-
+@property (strong, nonatomic) KKPlayingMusicViewController *playVc;
 @end
 
 @implementation KKHomeViewController
+
+-(KKPlayingMusicViewController *)playVc{
+    
+    if(_playVc == nil){
+        
+        self.playVc = [[KKPlayingMusicViewController alloc]init];
+    }
+    return _playVc;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -43,6 +53,7 @@
 #pragma mark - UITableViewDelegate
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
+    [self.playVc show];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 

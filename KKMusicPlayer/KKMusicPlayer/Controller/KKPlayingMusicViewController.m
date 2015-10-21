@@ -7,6 +7,7 @@
 //
 
 #import "KKPlayingMusicViewController.h"
+#import "UIView+Extension.h"
 
 @interface KKPlayingMusicViewController ()
 
@@ -19,11 +20,24 @@
     // Do any additional setup after loading the view from its nib.
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+#pragma mark - public methods
+-(void)show{
+    
+    UIWindow *window = [[UIApplication sharedApplication].windows lastObject];
+    [window addSubview:self.view];
+    
+    window.userInteractionEnabled = NO;
+    
+    self.view.frame = window.bounds;
+    
+    self.view.y = self.view.height;
+    
+    [UIView animateWithDuration:0.25 animations:^{
+        self.view.y = 0;
+    } completion:^(BOOL finished) {
+        window.userInteractionEnabled = YES;
+    }];
 }
-
 
 
 @end
