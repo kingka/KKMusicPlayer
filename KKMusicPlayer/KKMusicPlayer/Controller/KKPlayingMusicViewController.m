@@ -10,6 +10,7 @@
 #import "UIView+Extension.h"
 #import "KKMusciTool.h"
 #import "KKMusic.h"
+#import "KKAudioTool.h"
 
 #define duration 0.25
 @interface KKPlayingMusicViewController ()
@@ -76,6 +77,8 @@
     self.imageView.image = [UIImage imageNamed:@"play_cover_pic_bg"];
     self.singerNameLabel.text = nil;
     self.songNameLabel.text = nil;
+    
+    [KKAudioTool stopMusic:self.playingMusic.filename];
 }
 -(void)startPlayingMusic{
     
@@ -85,6 +88,9 @@
     self.imageView.image = [UIImage imageNamed:self.playingMusic.icon];
     self.singerNameLabel.text = self.playingMusic.singer;
     self.songNameLabel.text = self.playingMusic.name;
+    
+    //play
+    [KKAudioTool playMusic:self.playingMusic.filename];
     
 }
 - (IBAction)exit:(UIButton *)sender {
