@@ -6,6 +6,11 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="KKPlayingMusicViewController">
             <connections>
+                <outlet property="imageView" destination="qyp-xb-PMo" id="HVs-2a-eeH"/>
+                <outlet property="lyrcBtn" destination="vBK-Oh-DeO" id="hjk-wy-jcL"/>
+                <outlet property="singerNameLabel" destination="Tcx-X2-QsO" id="YJ3-GV-Fry"/>
+                <outlet property="songNameLabel" destination="IsY-Gd-IMV" id="yBm-M7-Zcz"/>
+                <outlet property="timeLabel" destination="rDv-wh-PpO" id="YQz-MA-q6P"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -49,6 +54,9 @@
                                     <state key="normal" backgroundImage="play">
                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                     </state>
+                                    <connections>
+                                        <action selector="play:" destination="-1" eventType="touchUpInside" id="o6W-RS-lA0"/>
+                                    </connections>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eE0-dP-PmR" userLabel="previous">
                                     <rect key="frame" x="75" y="17" width="41" height="46"/>
@@ -59,6 +67,9 @@
                                     <state key="normal" backgroundImage="previous">
                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                     </state>
+                                    <connections>
+                                        <action selector="previous:" destination="-1" eventType="touchUpInside" id="53X-NL-T1M"/>
+                                    </connections>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OUz-C2-sGG" userLabel="next">
                                     <rect key="frame" x="204" y="17" width="41" height="46"/>
@@ -69,6 +80,9 @@
                                     <state key="normal" backgroundImage="next">
                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                     </state>
+                                    <connections>
+                                        <action selector="next:" destination="-1" eventType="touchUpInside" id="ta4-fC-wwS"/>
+                                    </connections>
                                 </button>
                             </subviews>
                             <color key="backgroundColor" red="0.91372549020000005" green="0.92156862750000001" blue="0.94509803920000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -104,7 +118,7 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pLT-Mb-uTS" userLabel="顶部">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="385"/>
                     <subviews>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="play_cover_pic_bg" translatesAutoresizingMaskIntoConstraints="NO" id="qyp-xb-PMo" userLabel="图片">
+                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="play_cover_pic_bg" translatesAutoresizingMaskIntoConstraints="NO" id="qyp-xb-PMo" userLabel="图片">
                             <rect key="frame" x="0.0" y="0.0" width="320" height="385"/>
                         </imageView>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gBL-75-d6v" userLabel="名字背景">
@@ -140,7 +154,7 @@
                                 <constraint firstItem="IsY-Gd-IMV" firstAttribute="leading" secondItem="gBL-75-d6v" secondAttribute="leading" id="lua-U0-5IT"/>
                             </constraints>
                         </view>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v2B-BC-gai">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v2B-BC-gai" userLabel="退出">
                             <rect key="frame" x="25" y="35" width="41" height="48"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="48" id="kzb-r2-lTg"/>
@@ -149,8 +163,11 @@
                             <state key="normal" image="quit">
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
+                            <connections>
+                                <action selector="exit:" destination="-1" eventType="touchUpInside" id="9P0-Dy-jE3"/>
+                            </connections>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vBK-Oh-DeO">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vBK-Oh-DeO" userLabel="词图">
                             <rect key="frame" x="251" y="35" width="41" height="48"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="41" id="02t-Gy-s1n"/>
@@ -160,6 +177,9 @@
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
                             <state key="selected" image="pic_normal"/>
+                            <connections>
+                                <action selector="lyrcBtnClick:" destination="-1" eventType="touchUpInside" id="H2w-EY-iyc"/>
+                            </connections>
                         </button>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>

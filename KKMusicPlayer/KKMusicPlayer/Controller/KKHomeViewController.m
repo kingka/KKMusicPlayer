@@ -52,6 +52,8 @@
 
 #pragma mark - UITableViewDelegate
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    //设置playingMusci
+    [KKMusciTool setPlayingMusic:[KKMusciTool musics][indexPath.row]];
     
     [self.playVc show];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
