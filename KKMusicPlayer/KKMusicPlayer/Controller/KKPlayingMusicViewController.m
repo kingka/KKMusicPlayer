@@ -15,6 +15,7 @@
 
 #define durations 0.25
 @interface KKPlayingMusicViewController ()
+@property (weak, nonatomic) IBOutlet UIButton *playBtn;
 @property (weak, nonatomic) IBOutlet UIView *progerssView;
 @property (weak, nonatomic) IBOutlet UIButton *indicator;
 - (IBAction)tapProgressView:(UITapGestureRecognizer *)sender;
@@ -89,6 +90,11 @@
 }
 #pragma mark - Timer
 -(void)addCurrentTimeTimer{
+    
+
+    //只有在歌曲播放的时候，才添加
+    if(self.player.isPlaying == NO)return;
+
     //保证定时器没有延迟1秒更新
     [self updateCurrentTime];
     
@@ -124,6 +130,7 @@
 }
 -(void)resetPlayingMusic{
     
+    self.playBtn.selected = NO;
     //设置基本属性
     self.imageView.image = [UIImage imageNamed:@"play_cover_pic_bg"];
     self.singerNameLabel.text = nil;
@@ -158,6 +165,7 @@
 //    self.player.rate = 5.0;
     //添加定时器
     [self addCurrentTimeTimer];
+    self.playBtn.selected = YES;
     
 }
 - (IBAction)exit:(UIButton *)sender {
@@ -180,12 +188,45 @@
 }
 
 - (IBAction)play:(UIButton *)sender {
+    
+    if(self.playBtn.isSelected){//当前播放，所以点击之后暂停
+        
+        [self removeCurrentTimeTimer];
+        self.playBtn.selected = NO;
+        [KKAudioTool pauseMusic:self.playingMusic.filename];
+    }else{
+        [self addCurrentTimeTimer];
+        self.playBtn.selected = YES;
+        [KKAudioTool playMusic:self.playingMusic.filename];
+        
+        
+    }
 }
 
 - (IBAction)previous:(UIButton *)sender {
+    //防止用户点击过快造成缓冲时候出现的一些问题
+    UIWindow *window = [[UIApplication sharedApplication].windows lastObject];
+    window.userInteractionEnabled = NO;
+    //重置界面数据
+    [self resetPlayingMusic];
+    //获得下一首歌曲
+    [KKMusciTool setPlayingMusic:[KKMusciTool previousMusic]];
+    //播放
+    [self startPlayingMusic];
+    window.userInteractionEnabled = YES;
 }
 
 - (IBAction)next:(UIButton *)sender {
+    //防止用户点击过快造成缓冲时候出现的一些问题
+    UIWindow *window = [[UIApplication sharedApplication].windows lastObject];
+    window.userInteractionEnabled = NO;
+    //重置界面数据
+    [self resetPlayingMusic];
+    //获得下一首歌曲
+    [KKMusciTool setPlayingMusic:[KKMusciTool nextMusic]];
+    //播放
+    [self startPlayingMusic];
+    window.userInteractionEnabled = YES;
 }
 - (IBAction)tapProgressView:(UITapGestureRecognizer *)sender {
     

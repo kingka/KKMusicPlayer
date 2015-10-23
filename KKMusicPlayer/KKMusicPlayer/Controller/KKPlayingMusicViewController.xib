@@ -9,6 +9,7 @@
                 <outlet property="imageView" destination="qyp-xb-PMo" id="HVs-2a-eeH"/>
                 <outlet property="indicator" destination="eIp-J1-Z4M" id="7ei-di-1PY"/>
                 <outlet property="lyrcBtn" destination="vBK-Oh-DeO" id="hjk-wy-jcL"/>
+                <outlet property="playBtn" destination="6rP-cL-kE0" id="6Bb-aZ-DBb"/>
                 <outlet property="progerssView" destination="2jt-4j-8Qg" id="bHW-n8-s5Y"/>
                 <outlet property="singerNameLabel" destination="Tcx-X2-QsO" id="YJ3-GV-Fry"/>
                 <outlet property="slider" destination="nPO-M8-y0k" id="Emw-tc-Fsq"/>
@@ -55,11 +56,12 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6gv-5G-bBn" userLabel="控制面板">
                             <rect key="frame" x="0.0" y="15" width="320" height="80"/>
                             <subviews>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6rP-cL-kE0" userLabel="播放">
+                                <button opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6rP-cL-kE0" userLabel="播放">
                                     <rect key="frame" x="124" y="17" width="72" height="46"/>
-                                    <state key="normal" backgroundImage="play">
+                                    <state key="normal" image="play">
                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                     </state>
+                                    <state key="selected" image="pause"/>
                                     <connections>
                                         <action selector="play:" destination="-1" eventType="touchUpInside" id="o6W-RS-lA0"/>
                                     </connections>
@@ -245,6 +247,7 @@
     <resources>
         <image name="lyric_normal" width="41" height="48"/>
         <image name="next" width="41" height="46"/>
+        <image name="pause" width="72" height="46"/>
         <image name="pic_normal" width="41" height="48"/>
         <image name="play" width="72" height="46"/>
         <image name="play_cover_pic_bg" width="320" height="320"/>
