@@ -16,6 +16,7 @@
 #define durations 0.25
 @interface KKPlayingMusicViewController ()
 @property (weak, nonatomic) IBOutlet UIView *progerssView;
+@property (weak, nonatomic) IBOutlet UIButton *indicator;
 - (IBAction)tapProgressView:(UITapGestureRecognizer *)sender;
 - (IBAction)panSlider:(UIPanGestureRecognizer *)sender;
 @property (weak, nonatomic) IBOutlet UIButton *slider;
@@ -39,6 +40,7 @@
 - (void)viewDidLoad {
     
     [super viewDidLoad];
+    self.indicator.layer.cornerRadius = 7;
 }
 
 -(AVAudioPlayer *)player{
@@ -220,11 +222,22 @@
     if(sender.state == UIGestureRecognizerStateBegan){
         //停止定时器
         [self removeCurrentTimeTimer];
+        //显示指示器
+        self.indicator.hidden = NO;
+        //设置Y值
+        self.indicator.y = self.indicator.superview.height - 10 - self.indicator.height;
     }else if(sender.state == UIGestureRecognizerStateEnded){
         //设置播放器时间
         self.player.currentTime = time;
         //开启
         [self addCurrentTimeTimer];
+        //隐藏指示器
+        self.indicator.hidden = YES;
     }
+    //设置指示器的X
+    self.indicator.centerX = self.slider.centerX;
+    //设置指示器时间
+    [self.indicator setTitle:[self strWithTime:time] forState:UIControlStateNormal];
+    
 }
 @end

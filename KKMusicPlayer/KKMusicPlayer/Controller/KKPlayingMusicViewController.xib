@@ -7,6 +7,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="KKPlayingMusicViewController">
             <connections>
                 <outlet property="imageView" destination="qyp-xb-PMo" id="HVs-2a-eeH"/>
+                <outlet property="indicator" destination="eIp-J1-Z4M" id="7ei-di-1PY"/>
                 <outlet property="lyrcBtn" destination="vBK-Oh-DeO" id="hjk-wy-jcL"/>
                 <outlet property="progerssView" destination="2jt-4j-8Qg" id="bHW-n8-s5Y"/>
                 <outlet property="singerNameLabel" destination="Tcx-X2-QsO" id="YJ3-GV-Fry"/>
@@ -131,6 +132,15 @@
                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="play_cover_pic_bg" translatesAutoresizingMaskIntoConstraints="NO" id="qyp-xb-PMo" userLabel="图片">
                             <rect key="frame" x="0.0" y="0.0" width="320" height="385"/>
                         </imageView>
+                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eIp-J1-Z4M" userLabel="指示器">
+                            <rect key="frame" x="139" y="345" width="41" height="30"/>
+                            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="deviceRGB"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <state key="normal">
+                                <color key="titleColor" red="0.79215686269999996" green="0.81176470590000005" blue="0.83137254900000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                        </button>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gBL-75-d6v" userLabel="名字背景">
                             <rect key="frame" x="0.0" y="335" width="320" height="50"/>
                             <subviews>
