@@ -11,9 +11,14 @@
 #import "KKMusciTool.h"
 #import "KKMusic.h"
 #import "KKAudioTool.h"
+#import <AVFoundation/AVFoundation.h>
 
-#define duration 0.25
+#define durations 0.25
 @interface KKPlayingMusicViewController ()
+@property (weak, nonatomic) IBOutlet UIView *progerssView;
+- (IBAction)tapProgressView:(UITapGestureRecognizer *)sender;
+- (IBAction)panSlider:(UIPanGestureRecognizer *)sender;
+@property (weak, nonatomic) IBOutlet UIButton *slider;
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
 @property (weak, nonatomic) IBOutlet UILabel *songNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *singerNameLabel;
@@ -25,6 +30,8 @@
 - (IBAction)next:(UIButton *)sender;
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 @property (strong, nonatomic) KKMusic *playingMusic;
+@property (strong, nonatomic) AVAudioPlayer *player;
+@property (strong, nonatomic) NSTimer *currentTimeTimer;
 @end
 
 @implementation KKPlayingMusicViewController
@@ -34,6 +41,15 @@
     [super viewDidLoad];
 }
 
+-(AVAudioPlayer *)player{
+    
+    if(_player == nil){
+        
+        self.player = [[AVAudioPlayer alloc]init];
+    }
+    
+    return _player;
+}
 -(KKMusic *)playingMusic{
     
     if(_playingMusic == nil){
@@ -61,7 +77,7 @@
     }
     
     // 3.动画显示
-    [UIView animateWithDuration:duration animations:^{
+    [UIView animateWithDuration:durations animations:^{
         self.view.y = 0;
     } completion:^(BOOL finished) {
         window.userInteractionEnabled = YES;
@@ -69,8 +85,41 @@
         [self startPlayingMusic];
     }];
 }
+#pragma mark - Timer
+-(void)addCurrentTimeTimer{
+    //保证定时器没有延迟1秒更新
+    [self updateCurrentTime];
+    
+    self.currentTimeTimer = [NSTimer timerWithTimeInterval:1.0 target:self selector:@selector(updateCurrentTime) userInfo:nil repeats:YES];
+    [[NSRunLoop mainRunLoop] addTimer:self.currentTimeTimer forMode:NSRunLoopCommonModes];
+}
 
+-(void)removeCurrentTimeTimer{
+    
+    [self.currentTimeTimer invalidate];
+    self.currentTimeTimer = nil;
+}
+-(void)updateCurrentTime{
+    
+    //计算进度
+    double progress = self.player.currentTime / self.player.duration;
+    //滑块能滑动的最大值
+    CGFloat progressMaxX = self.view.width - self.slider.width;
+    
+    self.slider.x = progressMaxX * progress;
+    self.progerssView.width = self.slider.centerX;
+    
+    NSString *currentTime = [self strWithTime:self.player.currentTime];
+    [self.slider setTitle:currentTime forState:UIControlStateNormal];
+    
+}
 #pragma mark - private methods
+-(NSString*)strWithTime:(NSTimeInterval)time{
+    
+    NSInteger minute = time / 60;
+    NSInteger second = (NSInteger)time % 60;
+    return [NSString stringWithFormat:@"%ld:%ld", (long)minute, (long)second];
+}
 -(void)resetPlayingMusic{
     
     //设置基本属性
@@ -78,11 +127,20 @@
     self.singerNameLabel.text = nil;
     self.songNameLabel.text = nil;
     
+    //停止播放歌曲
     [KKAudioTool stopMusic:self.playingMusic.filename];
+    self.player = nil;
+    //移除定时器
+    [self removeCurrentTimeTimer];
+    
 }
 -(void)startPlayingMusic{
     
-    if(self.playingMusic == [KKMusciTool playingMusci])return;
+    if(self.playingMusic == [KKMusciTool playingMusci]){
+        
+        [self addCurrentTimeTimer];
+        return;
+    }
     self.playingMusic = [KKMusciTool playingMusci];
     //设置基本属性
     self.imageView.image = [UIImage imageNamed:self.playingMusic.icon];
@@ -90,17 +148,26 @@
     self.songNameLabel.text = self.playingMusic.name;
     
     //play
-    [KKAudioTool playMusic:self.playingMusic.filename];
+    self.player = [KKAudioTool playMusic:self.playingMusic.filename];
+    //设置时长
+    self.timeLabel.text = [self strWithTime:self.player.duration];
+    //加速
+//    self.player.enableRate = YES;
+//    self.player.rate = 5.0;
+    //添加定时器
+    [self addCurrentTimeTimer];
     
 }
 - (IBAction)exit:(UIButton *)sender {
 
+    //移除定时器
+    [self removeCurrentTimeTimer];
     // 0.禁用整个app的点击事件
     UIWindow *window = [[UIApplication sharedApplication].windows lastObject];
     window.userInteractionEnabled = NO;
     
     //动画
-    [UIView animateWithDuration:duration animations:^{
+    [UIView animateWithDuration:durations animations:^{
         self.view.y = self.view.height;
     } completion:^(BOOL finished) {
         self.view.hidden = YES;
@@ -117,5 +184,47 @@
 }
 
 - (IBAction)next:(UIButton *)sender {
+}
+- (IBAction)tapProgressView:(UITapGestureRecognizer *)sender {
+    
+    CGPoint point = [sender locationInView:sender.view];
+    NSInteger progressMaxX = self.view.width;
+    self.player.currentTime = (point.x / progressMaxX) * self.player.duration;
+    
+    self.slider.centerX = point.x;
+    self.progerssView.width = self.slider.centerX;
+}
+
+- (IBAction)panSlider:(UIPanGestureRecognizer *)sender {
+    //获得挪动的距离
+    CGPoint point = [sender translationInView:sender.view];
+    //清零，因为每次挪动都会获得一个值
+    [sender setTranslation:CGPointZero inView:sender.view];
+    //控制滑块和进度条的frame
+    CGFloat sliderMaxX = self.view.width - self.slider.width;
+    self.slider.x += point.x;
+    if(self.slider.x <0){
+        self.slider.x = 0;
+    }else if(self.slider.x > sliderMaxX){
+        self.slider.x = sliderMaxX;
+    }
+    
+    self.progerssView.width = self.slider.centerX;
+    
+    //设置时间
+    double progerss = self.slider.x / sliderMaxX;
+    NSTimeInterval time = self.player.duration * progerss;
+    [self.slider setTitle:[self strWithTime:time] forState:UIControlStateNormal];
+    
+    //判断手势状态
+    if(sender.state == UIGestureRecognizerStateBegan){
+        //停止定时器
+        [self removeCurrentTimeTimer];
+    }else if(sender.state == UIGestureRecognizerStateEnded){
+        //设置播放器时间
+        self.player.currentTime = time;
+        //开启
+        [self addCurrentTimeTimer];
+    }
 }
 @end

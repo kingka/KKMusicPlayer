@@ -8,7 +8,9 @@
             <connections>
                 <outlet property="imageView" destination="qyp-xb-PMo" id="HVs-2a-eeH"/>
                 <outlet property="lyrcBtn" destination="vBK-Oh-DeO" id="hjk-wy-jcL"/>
+                <outlet property="progerssView" destination="2jt-4j-8Qg" id="bHW-n8-s5Y"/>
                 <outlet property="singerNameLabel" destination="Tcx-X2-QsO" id="YJ3-GV-Fry"/>
+                <outlet property="slider" destination="nPO-M8-y0k" id="Emw-tc-Fsq"/>
                 <outlet property="songNameLabel" destination="IsY-Gd-IMV" id="yBm-M7-Zcz"/>
                 <outlet property="timeLabel" destination="rDv-wh-PpO" id="YQz-MA-q6P"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -25,7 +27,7 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TUw-bu-9eJ" userLabel="进度条背景">
                             <rect key="frame" x="0.0" y="0.0" width="320" height="15"/>
                             <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rDv-wh-PpO" userLabel="时长">
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rDv-wh-PpO" userLabel="时长">
                                     <rect key="frame" x="278" y="0.0" width="42" height="18"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="42" id="GwL-qr-8hY"/>
@@ -36,15 +38,18 @@
                                 </label>
                                 <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2jt-4j-8Qg" userLabel="进度条">
                                     <rect key="frame" x="0.0" y="0.0" width="20" height="37"/>
-                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="backgroundColor" red="0.15839422470273734" green="0.5841950673526517" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </view>
                             </subviews>
-                            <color key="backgroundColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="backgroundColor" red="0.792156862745098" green="0.81176470588235294" blue="0.83137254901960778" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
                                 <constraint firstAttribute="trailing" secondItem="rDv-wh-PpO" secondAttribute="trailing" id="H5X-EX-KAY"/>
                                 <constraint firstItem="rDv-wh-PpO" firstAttribute="top" secondItem="TUw-bu-9eJ" secondAttribute="top" id="VU7-Sn-hqi"/>
                                 <constraint firstAttribute="bottom" secondItem="rDv-wh-PpO" secondAttribute="bottom" constant="-3" id="pVB-Hg-zwg"/>
                             </constraints>
+                            <connections>
+                                <outletCollection property="gestureRecognizers" destination="A66-Ow-KVX" appends="YES" id="2Vr-lT-9tg"/>
+                            </connections>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6gv-5G-bBn" userLabel="控制面板">
                             <rect key="frame" x="0.0" y="15" width="320" height="80"/>
@@ -97,10 +102,15 @@
                             </constraints>
                         </view>
                         <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nPO-M8-y0k" userLabel="滑块">
-                            <rect key="frame" x="0.0" y="0.0" width="41" height="22"/>
-                            <state key="normal" image="process_thumb">
+                            <rect key="frame" x="-2" y="-3" width="41" height="22"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                            <state key="normal" title="0:0" backgroundImage="process_thumb">
+                                <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
+                            <connections>
+                                <outletCollection property="gestureRecognizers" destination="oQD-Pu-FOw" appends="YES" id="BLa-70-kb5"/>
+                            </connections>
                         </button>
                     </subviews>
                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.32000000000000001" colorSpace="calibratedRGB"/>
@@ -124,8 +134,8 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gBL-75-d6v" userLabel="名字背景">
                             <rect key="frame" x="0.0" y="335" width="320" height="50"/>
                             <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IsY-Gd-IMV" userLabel="歌曲名">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="21"/>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IsY-Gd-IMV" userLabel="歌曲名">
+                                    <rect key="frame" x="10" y="0.0" width="310" height="21"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="21" id="MBx-8H-frm"/>
                                     </constraints>
@@ -133,10 +143,10 @@
                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tcx-X2-QsO" userLabel="歌手名">
-                                    <rect key="frame" x="0.0" y="23" width="320" height="21"/>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tcx-X2-QsO" userLabel="歌手名">
+                                    <rect key="frame" x="10" y="23" width="310" height="21"/>
                                     <constraints>
-                                        <constraint firstAttribute="height" constant="21" id="RSM-lN-oLE"/>
+                                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="21" id="RSM-lN-oLE"/>
                                     </constraints>
                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -150,8 +160,8 @@
                                 <constraint firstAttribute="trailing" secondItem="Tcx-X2-QsO" secondAttribute="trailing" id="9Vt-p3-oBs"/>
                                 <constraint firstAttribute="height" constant="50" id="HEW-sq-BYw"/>
                                 <constraint firstAttribute="trailing" secondItem="IsY-Gd-IMV" secondAttribute="trailing" id="K4n-Le-DKP"/>
-                                <constraint firstItem="Tcx-X2-QsO" firstAttribute="leading" secondItem="gBL-75-d6v" secondAttribute="leading" id="P6c-gt-2mO"/>
-                                <constraint firstItem="IsY-Gd-IMV" firstAttribute="leading" secondItem="gBL-75-d6v" secondAttribute="leading" id="lua-U0-5IT"/>
+                                <constraint firstItem="Tcx-X2-QsO" firstAttribute="leading" secondItem="gBL-75-d6v" secondAttribute="leading" constant="10" id="P6c-gt-2mO"/>
+                                <constraint firstItem="IsY-Gd-IMV" firstAttribute="leading" secondItem="gBL-75-d6v" secondAttribute="leading" constant="10" id="lua-U0-5IT"/>
                             </constraints>
                         </view>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v2B-BC-gai" userLabel="退出">
@@ -211,6 +221,16 @@
             <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
             <point key="canvasLocation" x="286" y="400"/>
         </view>
+        <tapGestureRecognizer id="A66-Ow-KVX">
+            <connections>
+                <action selector="tapProgressView:" destination="-1" id="9p9-mk-2BZ"/>
+            </connections>
+        </tapGestureRecognizer>
+        <panGestureRecognizer minimumNumberOfTouches="1" id="oQD-Pu-FOw">
+            <connections>
+                <action selector="panSlider:" destination="-1" id="M1F-br-6rN"/>
+            </connections>
+        </panGestureRecognizer>
     </objects>
     <resources>
         <image name="lyric_normal" width="41" height="48"/>
