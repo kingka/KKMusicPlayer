@@ -167,9 +167,12 @@
     //加速
 //    self.player.enableRate = YES;
 //    self.player.rate = 5.0;
+    
     //添加定时器
     [self addCurrentTimeTimer];
     self.playBtn.selected = YES;
+    
+    self.lrcView.lrcName = self.playingMusic.lrcname;
     
 }
 - (IBAction)exit:(UIButton *)sender {

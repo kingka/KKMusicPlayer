@@ -7,14 +7,22 @@
 //
 
 #import "KKLrcView.h"
-
+#import "KKLrcLine.h"
 @interface KKLrcView() <UITableViewDataSource, UITableViewDelegate>
 @property (nonatomic, weak) UITableView *tableView;
-
+@property (strong, nonatomic) NSMutableArray *lrcArray;
 @end
 
 @implementation KKLrcView
 
+#pragma mark - lazyloading
+-(NSMutableArray *)lrcArray{
+    
+    if(_lrcArray == nil){
+        self.lrcArray = [NSMutableArray array];
+    }
+    return _lrcArray;
+}
 #pragma mark - init
 - (id)initWithFrame:(CGRect)frame
 {
@@ -50,16 +58,48 @@
 -(void)layoutSubviews{
     self.tableView.frame = self.bounds;
 }
+
+-(void)setLrcName:(NSString *)lrcName{
+    
+    _lrcName = [lrcName copy];
+    // 0.清空之前的歌词数据
+    [self.lrcArray removeAllObjects];
+    
+    // 1.加载歌词文件
+    NSURL *url = [[NSBundle mainBundle]URLForResource:lrcName withExtension:nil];
+    NSString *lrc = [NSString stringWithContentsOfURL:url encoding:NSUTF8StringEncoding error:nil];
+    //得到每一条包含歌词和时间的 str
+    NSArray *lrcCmps = [lrc componentsSeparatedByString:@"\n"];
+    //截取歌词和时间
+    for(NSString *lrcCmp in lrcCmps){
+        KKLrcLine *lrcLine = [[KKLrcLine alloc]init];
+        [self.lrcArray addObject:lrcLine];
+        if (![lrcCmp hasPrefix:@"["]) continue;
+        // 如果是歌词的头部信息（歌名、歌手、专辑）
+        if ([lrcCmp hasPrefix:@"[ti:"] || [lrcCmp hasPrefix:@"[ar:"] || [lrcCmp hasPrefix:@"[al:"] ) {
+            NSString *word = [[lrcCmp componentsSeparatedByString:@":"] lastObject];
+            lrcLine.word = [word substringToIndex:word.length - 1];
+        }else{// 非头部信息
+            NSArray *array = [lrcCmp componentsSeparatedByString:@"]"];
+            lrcLine.time = [[array firstObject] substringFromIndex:1];
+            lrcLine.word = [array lastObject];
+        }
+    }
+    [self.tableView reloadData];
+}
 #pragma mark -UITableViewDataSource
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
-    return 10;
+    return self.lrcArray.count;
 }
 
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"lrcCell" forIndexPath:indexPath];
     cell.backgroundColor = [UIColor clearColor];
+    [cell.textLabel setTextAlignment:NSTextAlignmentCenter];
+    KKLrcLine *line = self.lrcArray[indexPath.row];
+    cell.textLabel.text = line.word;
     
     return cell;
 }
