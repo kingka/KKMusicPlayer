@@ -14,7 +14,7 @@
 #import <AVFoundation/AVFoundation.h>
 
 #define durations 0.25
-@interface KKPlayingMusicViewController ()
+@interface KKPlayingMusicViewController ()<AVAudioPlayerDelegate>
 @property (weak, nonatomic) IBOutlet UIButton *playBtn;
 @property (weak, nonatomic) IBOutlet UIView *progerssView;
 @property (weak, nonatomic) IBOutlet UIButton *indicator;
@@ -158,6 +158,7 @@
     
     //play
     self.player = [KKAudioTool playMusic:self.playingMusic.filename];
+    self.player.delegate = self;
     //设置时长
     self.timeLabel.text = [self strWithTime:self.player.duration];
     //加速
@@ -280,5 +281,17 @@
     //设置指示器时间
     [self.indicator setTitle:[self strWithTime:time] forState:UIControlStateNormal];
     
+}
+#pragma mark - AVAudioPlayerDelegate
+-(void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag{
+    
+    [self next:nil];
+}
+
+-(void)audioPlayerBeginInterruption:(AVAudioPlayer *)player{
+    
+    if(player.isPlaying){
+        [self play:nil];
+    }
 }
 @end
