@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		F94CFC361BD88AB400255EB9 /* KKAudioTool.m in Sources */ = {isa = PBXBuildFile; fileRef = F94CFC351BD88AB400255EB9 /* KKAudioTool.m */; };
+		F94CFC3C1BDDFA0900255EB9 /* UIERealTimeBlurView.m in Sources */ = {isa = PBXBuildFile; fileRef = F94CFC391BDDFA0900255EB9 /* UIERealTimeBlurView.m */; };
+		F94CFC3D1BDDFA0900255EB9 /* UIImage+BoxBlur.m in Sources */ = {isa = PBXBuildFile; fileRef = F94CFC3B1BDDFA0900255EB9 /* UIImage+BoxBlur.m */; };
+		F94CFC401BDDFA8000255EB9 /* KKLrcView.m in Sources */ = {isa = PBXBuildFile; fileRef = F94CFC3F1BDDFA8000255EB9 /* KKLrcView.m */; };
 		F9AB2A3E1BD7730C00BA8CFD /* KKHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9AB2A3D1BD7730C00BA8CFD /* KKHomeViewController.m */; };
 		F9AB2A421BD7732800BA8CFD /* KKPlayingMusicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9AB2A401BD7732800BA8CFD /* KKPlayingMusicViewController.m */; };
 		F9AB2A431BD7732800BA8CFD /* KKPlayingMusicViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9AB2A411BD7732800BA8CFD /* KKPlayingMusicViewController.xib */; };
@@ -87,6 +90,12 @@
 /* Begin PBXFileReference section */
 		F94CFC341BD88AB400255EB9 /* KKAudioTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KKAudioTool.h; sourceTree = "<group>"; };
 		F94CFC351BD88AB400255EB9 /* KKAudioTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KKAudioTool.m; sourceTree = "<group>"; };
+		F94CFC381BDDFA0900255EB9 /* UIERealTimeBlurView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIERealTimeBlurView.h; sourceTree = "<group>"; };
+		F94CFC391BDDFA0900255EB9 /* UIERealTimeBlurView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIERealTimeBlurView.m; sourceTree = "<group>"; };
+		F94CFC3A1BDDFA0900255EB9 /* UIImage+BoxBlur.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+BoxBlur.h"; sourceTree = "<group>"; };
+		F94CFC3B1BDDFA0900255EB9 /* UIImage+BoxBlur.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+BoxBlur.m"; sourceTree = "<group>"; };
+		F94CFC3E1BDDFA8000255EB9 /* KKLrcView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KKLrcView.h; sourceTree = "<group>"; };
+		F94CFC3F1BDDFA8000255EB9 /* KKLrcView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KKLrcView.m; sourceTree = "<group>"; };
 		F9AB2A3C1BD7730C00BA8CFD /* KKHomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KKHomeViewController.h; sourceTree = "<group>"; };
 		F9AB2A3D1BD7730C00BA8CFD /* KKHomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KKHomeViewController.m; sourceTree = "<group>"; };
 		F9AB2A3F1BD7732800BA8CFD /* KKPlayingMusicViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KKPlayingMusicViewController.h; sourceTree = "<group>"; };
@@ -197,6 +206,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		F94CFC371BDDFA0900255EB9 /* RealTimeBlur */ = {
+			isa = PBXGroup;
+			children = (
+				F94CFC381BDDFA0900255EB9 /* UIERealTimeBlurView.h */,
+				F94CFC391BDDFA0900255EB9 /* UIERealTimeBlurView.m */,
+				F94CFC3A1BDDFA0900255EB9 /* UIImage+BoxBlur.h */,
+				F94CFC3B1BDDFA0900255EB9 /* UIImage+BoxBlur.m */,
+			);
+			path = RealTimeBlur;
+			sourceTree = "<group>";
+		};
 		F9AB2A3B1BD7730000BA8CFD /* Controller */ = {
 			isa = PBXGroup;
 			children = (
@@ -356,6 +376,7 @@
 		F9D08AF31BD76FDA00BBE09D /* Lib */ = {
 			isa = PBXGroup;
 			children = (
+				F94CFC371BDDFA0900255EB9 /* RealTimeBlur */,
 				F9AB2A7A1BD7882C00BA8CFD /* Colours */,
 				F9AB2A4A1BD7746100BA8CFD /* MJExtension */,
 			);
@@ -378,6 +399,8 @@
 			children = (
 				F9AB2A441BD7741400BA8CFD /* KKHomeViewCell.h */,
 				F9AB2A451BD7741400BA8CFD /* KKHomeViewCell.m */,
+				F94CFC3E1BDDFA8000255EB9 /* KKLrcView.h */,
+				F94CFC3F1BDDFA8000255EB9 /* KKLrcView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -585,16 +608,19 @@
 				F9AB2A681BD7746100BA8CFD /* NSObject+MJClass.m in Sources */,
 				F9AB2A661BD7746100BA8CFD /* MJPropertyKey.m in Sources */,
 				F9AB2A3E1BD7730C00BA8CFD /* KKHomeViewController.m in Sources */,
+				F94CFC3D1BDDFA0900255EB9 /* UIImage+BoxBlur.m in Sources */,
 				F9AB2A7D1BD7882C00BA8CFD /* Colours.m in Sources */,
 				F9D08A7A1BD76CA300BBE09D /* AppDelegate.m in Sources */,
 				F9AB2A651BD7746100BA8CFD /* MJProperty.m in Sources */,
 				F9AB2A641BD7746100BA8CFD /* MJFoundation.m in Sources */,
 				F9AB2A621BD7746100BA8CFD /* MJDictionaryCache.m in Sources */,
 				F9D08A771BD76CA300BBE09D /* main.m in Sources */,
+				F94CFC3C1BDDFA0900255EB9 /* UIERealTimeBlurView.m in Sources */,
 				F9AB2A491BD7743100BA8CFD /* KKMusic.m in Sources */,
 				F9AB2A671BD7746100BA8CFD /* MJPropertyType.m in Sources */,
 				F9AB2A421BD7732800BA8CFD /* KKPlayingMusicViewController.m in Sources */,
 				F9AB2A6F1BD774BD00BA8CFD /* KKLrcLine.m in Sources */,
+				F94CFC401BDDFA8000255EB9 /* KKLrcView.m in Sources */,
 				F9AB2A6A1BD7746100BA8CFD /* NSObject+MJKeyValue.m in Sources */,
 				F9AB2A731BD780D500BA8CFD /* KKMusciTool.m in Sources */,
 				F9AB2A6C1BD7746100BA8CFD /* NSString+MJExtension.m in Sources */,

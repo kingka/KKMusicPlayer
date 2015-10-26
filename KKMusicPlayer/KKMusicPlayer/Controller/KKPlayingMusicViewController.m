@@ -12,9 +12,12 @@
 #import "KKMusic.h"
 #import "KKAudioTool.h"
 #import <AVFoundation/AVFoundation.h>
+#import "KKLrcView.h"
 
 #define durations 0.25
 @interface KKPlayingMusicViewController ()<AVAudioPlayerDelegate>
+@property (weak, nonatomic) IBOutlet KKLrcView *lrcView;
+
 @property (weak, nonatomic) IBOutlet UIButton *playBtn;
 @property (weak, nonatomic) IBOutlet UIView *progerssView;
 @property (weak, nonatomic) IBOutlet UIButton *indicator;
@@ -186,6 +189,13 @@
     }];
 }
 - (IBAction)lyrcBtnClick:(UIButton *)sender {
+    if(self.lrcView.isHidden){//show
+        self.lrcView.hidden = NO;
+        self.lyrcBtn.selected = YES;
+    }else{
+        self.lrcView.hidden = YES;
+        self.lyrcBtn.selected = NO;
+    }
 }
 
 - (IBAction)play:(UIButton *)sender {

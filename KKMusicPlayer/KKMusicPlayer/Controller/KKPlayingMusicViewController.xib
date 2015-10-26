@@ -8,6 +8,7 @@
             <connections>
                 <outlet property="imageView" destination="qyp-xb-PMo" id="HVs-2a-eeH"/>
                 <outlet property="indicator" destination="eIp-J1-Z4M" id="7ei-di-1PY"/>
+                <outlet property="lrcView" destination="Hnc-AT-bHQ" id="gtB-zh-5g6"/>
                 <outlet property="lyrcBtn" destination="vBK-Oh-DeO" id="hjk-wy-jcL"/>
                 <outlet property="playBtn" destination="6rP-cL-kE0" id="6Bb-aZ-DBb"/>
                 <outlet property="progerssView" destination="2jt-4j-8Qg" id="bHW-n8-s5Y"/>
@@ -176,6 +177,10 @@
                                 <constraint firstItem="IsY-Gd-IMV" firstAttribute="leading" secondItem="gBL-75-d6v" secondAttribute="leading" constant="10" id="lua-U0-5IT"/>
                             </constraints>
                         </view>
+                        <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Hnc-AT-bHQ" userLabel="LRC" customClass="KKLrcView">
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="385"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        </view>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v2B-BC-gai" userLabel="退出">
                             <rect key="frame" x="25" y="35" width="41" height="48"/>
                             <constraints>
@@ -208,6 +213,8 @@
                     <constraints>
                         <constraint firstItem="vBK-Oh-DeO" firstAttribute="top" secondItem="pLT-Mb-uTS" secondAttribute="top" constant="35" id="0IO-5C-Vmk"/>
                         <constraint firstAttribute="trailing" secondItem="gBL-75-d6v" secondAttribute="trailing" id="2Na-2k-6rK"/>
+                        <constraint firstAttribute="bottom" secondItem="Hnc-AT-bHQ" secondAttribute="bottom" id="5mL-YM-N6d"/>
+                        <constraint firstItem="Hnc-AT-bHQ" firstAttribute="top" secondItem="pLT-Mb-uTS" secondAttribute="top" id="Bfg-cA-4z0"/>
                         <constraint firstAttribute="trailing" secondItem="qyp-xb-PMo" secondAttribute="trailing" id="Gz9-ow-Dee"/>
                         <constraint firstItem="v2B-BC-gai" firstAttribute="leading" secondItem="pLT-Mb-uTS" secondAttribute="leading" constant="25" id="Nwk-4d-kcD"/>
                         <constraint firstItem="qyp-xb-PMo" firstAttribute="leading" secondItem="pLT-Mb-uTS" secondAttribute="leading" id="On8-PD-ywC"/>
@@ -216,6 +223,8 @@
                         <constraint firstAttribute="bottom" secondItem="gBL-75-d6v" secondAttribute="bottom" id="SiP-Lw-koe"/>
                         <constraint firstAttribute="bottom" secondItem="qyp-xb-PMo" secondAttribute="bottom" id="SkD-iC-KXG"/>
                         <constraint firstItem="qyp-xb-PMo" firstAttribute="top" secondItem="pLT-Mb-uTS" secondAttribute="top" id="Xgd-ya-r1j"/>
+                        <constraint firstItem="Hnc-AT-bHQ" firstAttribute="leading" secondItem="pLT-Mb-uTS" secondAttribute="leading" id="Xvk-U9-RKA"/>
+                        <constraint firstAttribute="trailing" secondItem="Hnc-AT-bHQ" secondAttribute="trailing" id="iof-e6-EaV"/>
                         <constraint firstAttribute="trailing" secondItem="vBK-Oh-DeO" secondAttribute="trailing" constant="28" id="jQ6-vi-EzK"/>
                     </constraints>
                 </view>
