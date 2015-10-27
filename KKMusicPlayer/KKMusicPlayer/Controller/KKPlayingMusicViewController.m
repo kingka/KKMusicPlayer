@@ -13,6 +13,7 @@
 #import "KKAudioTool.h"
 #import <AVFoundation/AVFoundation.h>
 #import "KKLrcView.h"
+#import <MediaPlayer/MediaPlayer.h>
 
 #define durations 0.25
 @interface KKPlayingMusicViewController ()<AVAudioPlayerDelegate>
@@ -202,10 +203,70 @@
     //添加定时器
     [self addCurrentTimeTimer];
     [self addLrcTimer];
+    //设置播放按钮状态
     self.playBtn.selected = YES;
-    
+    //切换歌词（加载新的歌词）
     self.lrcView.lrcName = self.playingMusic.lrcname;
+    //切换锁屏界面的歌曲
+    [self updateLockedScreenMusic];
     
+}
+
+-(void)updateLockedScreenMusic{
+    //1播放信息中心
+    MPNowPlayingInfoCenter *center = [MPNowPlayingInfoCenter defaultCenter];
+    //2初始化播放信息
+    NSMutableDictionary *info = [NSMutableDictionary dictionary];
+    // 专辑名称
+    info[MPMediaItemPropertyAlbumTitle] = self.playingMusic.name;
+    // 歌手
+    info[MPMediaItemPropertyArtist] = self.playingMusic.singer;
+    // 歌曲名称
+    info[MPMediaItemPropertyTitle] = self.playingMusic.name;
+    // 设置图片
+    info[MPMediaItemPropertyArtwork] = [[MPMediaItemArtwork alloc] initWithImage:[UIImage imageNamed:self.playingMusic.icon]];
+    // 设置持续时间（歌曲的总时间）
+    info[MPMediaItemPropertyPlaybackDuration] = @(self.player.duration);
+    // 设置当前播放进度
+    info[MPNowPlayingInfoPropertyElapsedPlaybackTime] = @(self.player.currentTime);
+    
+    // 3.切换播放信息
+    center.nowPlayingInfo = info;
+    // 4.开始监听远程控制事件
+    // 4.1.成为第一响应者（必备条件）
+    [self becomeFirstResponder];
+    // 4.2.开始监控
+    //[[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
+#warning in ios7 or later
+    MPRemoteCommandCenter *rcenter = [MPRemoteCommandCenter sharedCommandCenter];
+//    MPRemoteCommand *next = [[MPRemoteCommand alloc]init];
+//    [next addTarget:self action:@selector(next:)];
+//    rcenter.nextTrackCommand = next;
+    [rcenter.previousTrackCommand addTargetWithHandler:^MPRemoteCommandHandlerStatus(MPRemoteCommandEvent *event) {
+        [self previous:nil];
+        return MPRemoteCommandHandlerStatusSuccess;
+        }
+    ];
+    
+    [rcenter.nextTrackCommand addTargetWithHandler:^MPRemoteCommandHandlerStatus(MPRemoteCommandEvent *event) {
+        [self next:nil];
+        return MPRemoteCommandHandlerStatusSuccess;
+    }
+     ];
+    
+    [rcenter.playCommand addTargetWithHandler:^MPRemoteCommandHandlerStatus(MPRemoteCommandEvent *event) {
+        [self play:nil];
+        return MPRemoteCommandHandlerStatusSuccess;
+    }
+     ];
+    
+    [rcenter.pauseCommand addTargetWithHandler:^MPRemoteCommandHandlerStatus(MPRemoteCommandEvent *event) {
+        [self play:nil];
+        return MPRemoteCommandHandlerStatusSuccess;
+    }
+     ];
+
+
 }
 - (IBAction)exit:(UIButton *)sender {
 
@@ -341,4 +402,42 @@
         [self play:nil];
     }
 }
+#pragma mark - remote event monitor
+- (BOOL)canBecomeFirstResponder
+{
+    return YES;
+}
+
+- (void)remoteControlReceivedWithEvent:(UIEvent *)event
+{
+    //    event.type; // 事件类型
+    //    event.subtype; // 事件的子类型
+    //    UIEventSubtypeRemoteControlPlay                 = 100,
+    //    UIEventSubtypeRemoteControlPause                = 101,
+    //    UIEventSubtypeRemoteControlStop                 = 102,
+    //    UIEventSubtypeRemoteControlTogglePlayPause      = 103,
+    //    UIEventSubtypeRemoteControlNextTrack            = 104,
+    //    UIEventSubtypeRemoteControlPreviousTrack        = 105,
+    //    UIEventSubtypeRemoteControlBeginSeekingBackward = 106,
+    //    UIEventSubtypeRemoteControlEndSeekingBackward   = 107,
+    //    UIEventSubtypeRemoteControlBeginSeekingForward  = 108,
+    //    UIEventSubtypeRemoteControlEndSeekingForward    = 109,
+    switch (event.subtype) {
+        case UIEventSubtypeRemoteControlPlay:
+        case UIEventSubtypeRemoteControlPause:
+            [self play:nil];
+            break;
+            
+        case UIEventSubtypeRemoteControlNextTrack:
+            [self next:nil];
+            break;
+            
+        case UIEventSubtypeRemoteControlPreviousTrack:
+            [self previous:nil];
+            
+        default:
+            break;
+    }
+}
+
 @end
