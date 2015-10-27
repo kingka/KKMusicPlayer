@@ -8,9 +8,11 @@
 
 #import "KKLrcView.h"
 #import "KKLrcLine.h"
+#import "UIView+Extension.h"
 @interface KKLrcView() <UITableViewDataSource, UITableViewDelegate>
 @property (nonatomic, weak) UITableView *tableView;
 @property (strong, nonatomic) NSMutableArray *lrcArray;
+@property (assign, nonatomic) NSInteger currentIndex;
 @end
 
 @implementation KKLrcView
@@ -56,7 +58,42 @@
 }
 
 -(void)layoutSubviews{
+    [super layoutSubviews];
     self.tableView.frame = self.bounds;
+    self.tableView.contentInset = UIEdgeInsetsMake(self.height * 0.5, 0, self.height * 0.5, 0);
+}
+
+#pragma mark - publicMethod
+-(void)setCurrentTime:(NSTimeInterval)currentTime{
+    _currentTime = currentTime;
+    int minute = currentTime / 60;
+    int second = (int)currentTime % 60;
+    int msecond = (currentTime - (int)currentTime) * 100;
+    NSString *timeStr = [NSString stringWithFormat:@"%02d:%02d.%02d",minute,second,msecond];
+    [self.lrcArray enumerateObjectsUsingBlock:^(KKLrcLine *lrcLine, NSUInteger idx, BOOL *stop) {
+        
+        NSString *tTime = lrcLine.time;
+        NSString *nextTime = nil;
+        NSUInteger nextIndex = idx + 1;
+        
+        if(nextIndex < self.lrcArray.count){
+            KKLrcLine *nextLine = self.lrcArray[nextIndex];
+            nextTime = nextLine.time;
+            
+            //需要的条件为：当前时间要大于或等于当前循环到的 time,并且下一个time 要大于当前时间，这中间的，就是我们要的歌词，添加 currentIdx是为了防止tableView滚动的次数太多
+            if(
+                [timeStr compare:tTime]!= NSOrderedAscending
+               &&[timeStr compare:nextTime] == NSOrderedAscending
+               && self.currentIndex != idx){
+                
+                self.currentIndex = idx;
+                NSIndexPath *path = [NSIndexPath indexPathForRow:idx inSection:0];
+                [self.tableView scrollToRowAtIndexPath:path atScrollPosition:UITableViewScrollPositionTop animated:YES];
+                
+                *stop = YES;
+            }
+        }
+    }];
 }
 
 -(void)setLrcName:(NSString *)lrcName{
@@ -97,6 +134,8 @@
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"lrcCell" forIndexPath:indexPath];
     cell.backgroundColor = [UIColor clearColor];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    cell.textLabel.textColor = [UIColor whiteColor];
     [cell.textLabel setTextAlignment:NSTextAlignmentCenter];
     KKLrcLine *line = self.lrcArray[indexPath.row];
     cell.textLabel.text = line.word;

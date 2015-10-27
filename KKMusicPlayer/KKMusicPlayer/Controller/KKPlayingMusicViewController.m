@@ -36,7 +36,10 @@
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 @property (strong, nonatomic) KKMusic *playingMusic;
 @property (strong, nonatomic) AVAudioPlayer *player;
+///进度条定时器
 @property (strong, nonatomic) NSTimer *currentTimeTimer;
+///歌词定时器
+@property (strong, nonatomic) CADisplayLink *lrcTimer;
 @end
 
 @implementation KKPlayingMusicViewController
@@ -92,12 +95,38 @@
     }];
 }
 #pragma mark - Timer
--(void)addCurrentTimeTimer{
+-(void)addLrcTimer{
+    //只有在歌曲播放的时候并且歌词显示，才添加
+    if(self.player.isPlaying == NO || self.lrcView.hidden)return;
     
+    //先清除上一个定时器
+    [self removeLrcTimer];
+    
+    //保证定时器没有延迟1秒更新
+    [self updateLrc];
+    
+    self.lrcTimer = [CADisplayLink displayLinkWithTarget:self selector:@selector(updateLrc)];
+    [self.lrcTimer addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSRunLoopCommonModes];
+    
+}
 
+-(void)removeLrcTimer{
+    
+    [self.lrcTimer invalidate];
+    self.lrcTimer = nil;
+}
+
+-(void)updateLrc{
+
+    self.lrcView.currentTime = self.player.currentTime;
+}
+-(void)addCurrentTimeTimer{
     //只有在歌曲播放的时候，才添加
     if(self.player.isPlaying == NO)return;
 
+    //先清除上一个定时器
+    [self removeCurrentTimeTimer];
+    
     //保证定时器没有延迟1秒更新
     [self updateCurrentTime];
     
@@ -144,6 +173,7 @@
     self.player = nil;
     //移除定时器
     [self removeCurrentTimeTimer];
+    [self removeLrcTimer];
     
 }
 -(void)startPlayingMusic{
@@ -151,6 +181,7 @@
     if(self.playingMusic == [KKMusciTool playingMusci]){
         
         [self addCurrentTimeTimer];
+        [self addLrcTimer];
         return;
     }
     self.playingMusic = [KKMusciTool playingMusci];
@@ -170,6 +201,7 @@
     
     //添加定时器
     [self addCurrentTimeTimer];
+    [self addLrcTimer];
     self.playBtn.selected = YES;
     
     self.lrcView.lrcName = self.playingMusic.lrcname;
@@ -179,6 +211,7 @@
 
     //移除定时器
     [self removeCurrentTimeTimer];
+    [self removeLrcTimer];
     // 0.禁用整个app的点击事件
     UIWindow *window = [[UIApplication sharedApplication].windows lastObject];
     window.userInteractionEnabled = NO;
@@ -195,25 +228,26 @@
     if(self.lrcView.isHidden){//show
         self.lrcView.hidden = NO;
         self.lyrcBtn.selected = YES;
+        [self addLrcTimer];
     }else{
         self.lrcView.hidden = YES;
         self.lyrcBtn.selected = NO;
+        [self removeLrcTimer];
     }
 }
 
 - (IBAction)play:(UIButton *)sender {
     
     if(self.playBtn.isSelected){//当前播放，所以点击之后暂停
-        
-        [self removeCurrentTimeTimer];
-        self.playBtn.selected = NO;
+        sender.selected = NO;
         [KKAudioTool pauseMusic:self.playingMusic.filename];
+        [self removeCurrentTimeTimer];
+        [self removeLrcTimer];
     }else{
-        [self addCurrentTimeTimer];
-        self.playBtn.selected = YES;
+        sender.selected = YES;
         [KKAudioTool playMusic:self.playingMusic.filename];
-        
-        
+        [self addCurrentTimeTimer];
+        [self addLrcTimer];
     }
 }
 

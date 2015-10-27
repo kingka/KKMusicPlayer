@@ -11,4 +11,5 @@
 @interface KKLrcView : UIERealTimeBlurView
 
 @property (copy, nonatomic) NSString *lrcName;
+@property (assign, nonatomic) NSTimeInterval currentTime;
 @end
