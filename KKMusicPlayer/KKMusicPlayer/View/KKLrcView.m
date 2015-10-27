@@ -9,6 +9,7 @@
 #import "KKLrcView.h"
 #import "KKLrcLine.h"
 #import "UIView+Extension.h"
+#import "Colours.h"
 @interface KKLrcView() <UITableViewDataSource, UITableViewDelegate>
 @property (nonatomic, weak) UITableView *tableView;
 @property (strong, nonatomic) NSMutableArray *lrcArray;
@@ -65,13 +66,20 @@
 
 #pragma mark - publicMethod
 -(void)setCurrentTime:(NSTimeInterval)currentTime{
+    
+    if (currentTime < _currentTime) {
+        self.currentIndex = -1;
+    }
     _currentTime = currentTime;
+    
     int minute = currentTime / 60;
     int second = (int)currentTime % 60;
     int msecond = (currentTime - (int)currentTime) * 100;
     NSString *timeStr = [NSString stringWithFormat:@"%02d:%02d.%02d",minute,second,msecond];
-    [self.lrcArray enumerateObjectsUsingBlock:^(KKLrcLine *lrcLine, NSUInteger idx, BOOL *stop) {
-        
+    
+    NSInteger count = self.lrcArray.count;
+    for(NSInteger idx = self.currentIndex + 1; idx < count ; idx ++){
+        KKLrcLine *lrcLine = self.lrcArray[idx];
         NSString *tTime = lrcLine.time;
         NSString *nextTime = nil;
         NSUInteger nextIndex = idx + 1;
@@ -86,14 +94,19 @@
                &&[timeStr compare:nextTime] == NSOrderedAscending
                && self.currentIndex != idx){
                 
+                NSArray *reloadPath = @[
+                                        [NSIndexPath indexPathForRow:self.currentIndex inSection:0],
+                                        [NSIndexPath indexPathForRow:idx inSection:0]
+                                        ];
+                //这句代码的位置不能放在reloadPath之前，且要放在reloadRowsAtIndexPaths之前
                 self.currentIndex = idx;
+                [self.tableView reloadRowsAtIndexPaths:reloadPath withRowAnimation:UITableViewRowAnimationNone];
+                
                 NSIndexPath *path = [NSIndexPath indexPathForRow:idx inSection:0];
                 [self.tableView scrollToRowAtIndexPath:path atScrollPosition:UITableViewScrollPositionTop animated:YES];
-                
-                *stop = YES;
             }
         }
-    }];
+    };
 }
 
 -(void)setLrcName:(NSString *)lrcName{
@@ -137,9 +150,16 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.textLabel.textColor = [UIColor whiteColor];
     [cell.textLabel setTextAlignment:NSTextAlignmentCenter];
+    cell.textLabel.numberOfLines = 0;
     KKLrcLine *line = self.lrcArray[indexPath.row];
     cell.textLabel.text = line.word;
     
+    if(self.currentIndex == indexPath.row){
+        cell.textLabel.font = [UIFont boldSystemFontOfSize:18];
+        cell.textLabel.textColor = [UIColor waveColor];
+    }else{
+        cell.textLabel.font = [UIFont boldSystemFontOfSize:15];
+    }
     return cell;
 }
 #pragma mark -UITableViewDelegate
