@@ -49,6 +49,7 @@
     
     [super viewDidLoad];
     self.indicator.layer.cornerRadius = 7;
+    [self setupRemote];
 }
 
 -(AVAudioPlayer *)player{
@@ -234,39 +235,25 @@
     center.nowPlayingInfo = info;
     // 4.开始监听远程控制事件
     // 4.1.成为第一响应者（必备条件）
-    [self becomeFirstResponder];
+    //[self becomeFirstResponder];
     // 4.2.开始监控
     //[[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
+
+}
+
+-(void)setupRemote{
 #warning in ios7 or later
     MPRemoteCommandCenter *rcenter = [MPRemoteCommandCenter sharedCommandCenter];
-//    MPRemoteCommand *next = [[MPRemoteCommand alloc]init];
-//    [next addTarget:self action:@selector(next:)];
-//    rcenter.nextTrackCommand = next;
-    [rcenter.previousTrackCommand addTargetWithHandler:^MPRemoteCommandHandlerStatus(MPRemoteCommandEvent *event) {
-        [self previous:nil];
-        return MPRemoteCommandHandlerStatusSuccess;
-        }
-    ];
-    
-    [rcenter.nextTrackCommand addTargetWithHandler:^MPRemoteCommandHandlerStatus(MPRemoteCommandEvent *event) {
-        [self next:nil];
-        return MPRemoteCommandHandlerStatusSuccess;
-    }
-     ];
-    
-    [rcenter.playCommand addTargetWithHandler:^MPRemoteCommandHandlerStatus(MPRemoteCommandEvent *event) {
-        [self play:nil];
-        return MPRemoteCommandHandlerStatusSuccess;
-    }
-     ];
-    
-    [rcenter.pauseCommand addTargetWithHandler:^MPRemoteCommandHandlerStatus(MPRemoteCommandEvent *event) {
-        [self play:nil];
-        return MPRemoteCommandHandlerStatusSuccess;
-    }
-     ];
 
-
+    [rcenter.previousTrackCommand addTarget:self action:@selector(previous:)];
+    
+    [rcenter.nextTrackCommand addTarget:self action:@selector(next:)];
+    
+    [rcenter.playCommand addTarget:self action:@selector(play:)];
+    
+    
+    [rcenter.pauseCommand addTarget:self action:@selector(play:)];
+    
 }
 - (IBAction)exit:(UIButton *)sender {
 
@@ -300,12 +287,12 @@
 - (IBAction)play:(UIButton *)sender {
     
     if(self.playBtn.isSelected){//当前播放，所以点击之后暂停
-        sender.selected = NO;
+        self.playBtn.selected = NO;
         [KKAudioTool pauseMusic:self.playingMusic.filename];
         [self removeCurrentTimeTimer];
         [self removeLrcTimer];
     }else{
-        sender.selected = YES;
+        self.playBtn.selected = YES;
         [KKAudioTool playMusic:self.playingMusic.filename];
         [self addCurrentTimeTimer];
         [self addLrcTimer];
@@ -322,6 +309,7 @@
     [KKMusciTool setPlayingMusic:[KKMusciTool previousMusic]];
     //播放
     [self startPlayingMusic];
+    NSLog(@"previous:%@",self.playingMusic.name);
     window.userInteractionEnabled = YES;
 }
 
@@ -335,6 +323,7 @@
     [KKMusciTool setPlayingMusic:[KKMusciTool nextMusic]];
     //播放
     [self startPlayingMusic];
+    NSLog(@"next:%@",self.playingMusic.name);
     window.userInteractionEnabled = YES;
 }
 - (IBAction)tapProgressView:(UITapGestureRecognizer *)sender {
